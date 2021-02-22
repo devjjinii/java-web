@@ -1,6 +1,7 @@
 package com.jin.web.service;
 
 import com.jin.web.dto.Board;
+import com.jin.web.param.BoardParam;
 import com.jin.web.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class BoardService {
 
     public Board get(int boardId) { return boardRepository.get(boardId); }
 
-    public void save (Board board) {
+    public void save (BoardParam board) {
         // boradId
         Board boardId = boardRepository.get(board.getBoardId());
         if (boardId == null) {

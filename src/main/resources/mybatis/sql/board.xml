@@ -24,7 +24,7 @@
         ORDER BY B.REG_DATE DESC
     </select>
 
-    <insert id="save" parameterType="com.jin.web.dto.Board" useGeneratedKeys="true" keyProperty="boardId">
+    <insert id="save" parameterType="com.jin.web.param.BoardParam" useGeneratedKeys="true" keyProperty="boardId">
        INSERT INTO TB_BOARD
        (
         TITLE
