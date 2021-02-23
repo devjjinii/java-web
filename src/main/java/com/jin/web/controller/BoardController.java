@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,8 @@ public class BoardController {
 
     @GetMapping(value = "/list")
     @ApiOperation(value = "목록 조회", notes = "게시물 전체 리스트를 확인할 수 있다.")
-    public Response<List<Board>> getList() {
-        return new Response(boardService.getList());
+    public ResponseEntity<List<Board>> getList() {
+        return new ResponseEntity<>(boardService.getList(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{boardId}")
@@ -32,8 +34,8 @@ public class BoardController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardId", value = "게시물 번호", example = "1")
     })
-    public Response<Board> get(@PathVariable int boardId) {
-        return new Response(boardService.get(boardId));
+    public ResponseEntity<Board> get(@PathVariable int boardId) {
+        return new ResponseEntity<>(boardService.get(boardId), HttpStatus.OK);
     }
 
     @PostMapping(value = "/save")
@@ -43,9 +45,9 @@ public class BoardController {
             @ApiImplicitParam(name="title", value = "제목", example = "제목"),
             @ApiImplicitParam(name="contents", value = "내용", example = "내용")
     })
-    public Response<Integer> save(BoardParam board) {
+    public ResponseEntity<Integer> save(BoardParam board) {
          boardService.save(board);
-         return new Response(board.getBoardId());
+         return new ResponseEntity<>(board.getBoardId(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/delete/{boardId}")
@@ -53,12 +55,12 @@ public class BoardController {
     @ApiImplicitParams({
             @ApiImplicitParam(name="boardId", value = "게시물 번호", example = "1"),
     })
-    public Response<Boolean> delete(@PathVariable int boardId) {
+    public ResponseEntity<Boolean> delete(@PathVariable int boardId) {
         Board board = boardService.get(boardId);
         if(board == null) {
-            return new Response(false);
+            return new ResponseEntity<>(false, HttpStatus.OK);
         }
         boardService.delete(boardId);
-        return new Response(true);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }

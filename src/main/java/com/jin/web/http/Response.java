@@ -5,6 +5,9 @@ import lombok.Data;
 /**
  * ResponseEntity 가 아닌
  * 생성한 API 공통 규격
+ *
+ * ResponseEntity 사용.
+ *  - 현재 사용안함
  * */
 @Data
 public class Response<T> {
