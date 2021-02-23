@@ -1,6 +1,7 @@
 package com.jin.web.controller;
 
 import com.jin.web.dto.Board;
+import com.jin.web.http.Response;
 import com.jin.web.param.BoardParam;
 import com.jin.web.service.BoardService;
 import io.swagger.annotations.Api;
@@ -22,8 +23,8 @@ public class BoardController {
 
     @GetMapping(value = "/list")
     @ApiOperation(value = "목록 조회", notes = "게시물 전체 리스트를 확인할 수 있다.")
-   public List<Board> getList() {
-        return boardService.getList();
+    public Response<List<Board>> getList() {
+        return new Response(boardService.getList());
     }
 
     @GetMapping(value = "/{boardId}")
@@ -31,8 +32,8 @@ public class BoardController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardId", value = "게시물 번호", example = "1")
     })
-    public Board get(@PathVariable int boardId) {
-        return boardService.get(boardId);
+    public Response<Board> get(@PathVariable int boardId) {
+        return new Response(boardService.get(boardId));
     }
 
     @PostMapping(value = "/save")
@@ -42,9 +43,9 @@ public class BoardController {
             @ApiImplicitParam(name="title", value = "제목", example = "제목"),
             @ApiImplicitParam(name="contents", value = "내용", example = "내용")
     })
-    public int save(BoardParam board) {
+    public Response<Integer> save(BoardParam board) {
          boardService.save(board);
-         return board.getBoardId();
+         return new Response(board.getBoardId());
     }
 
     @PostMapping(value = "/delete/{boardId}")
@@ -52,12 +53,12 @@ public class BoardController {
     @ApiImplicitParams({
             @ApiImplicitParam(name="boardId", value = "게시물 번호", example = "1"),
     })
-    public boolean delete(@PathVariable int boardId) {
+    public Response<Boolean> delete(@PathVariable int boardId) {
         Board board = boardService.get(boardId);
         if(board == null) {
-            return false;
+            return new Response(false);
         }
         boardService.delete(boardId);
-        return true;
+        return new Response(true);
     }
 }
