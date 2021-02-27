@@ -1,7 +1,9 @@
 package com.jin.web.controller;
 
+import com.jin.web.config.exception.BaseException;
 import com.jin.web.dto.Board;
 import com.jin.web.http.Response;
+import com.jin.web.http.ResponseCode;
 import com.jin.web.param.BoardParam;
 import com.jin.web.service.BoardService;
 import io.swagger.annotations.Api;
@@ -9,8 +11,9 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+//import org.springframework.http.HttpStatus;
+//import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +28,9 @@ public class BoardController {
 
     @GetMapping(value = "/list")
     @ApiOperation(value = "목록 조회", notes = "게시물 전체 리스트를 확인할 수 있다.")
-    public ResponseEntity<List<Board>> getList() {
-        return new ResponseEntity<>(boardService.getList(), HttpStatus.OK);
+    public Response<List<Board>> getList() {
+//        return new ResponseEntity<>(boardService.getList(), HttpStatus.OK);
+        return new Response<>(boardService.getList());
     }
 
     @GetMapping(value = "/{boardId}")
@@ -34,8 +38,12 @@ public class BoardController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardId", value = "게시물 번호", example = "1")
     })
-    public ResponseEntity<Board> get(@PathVariable int boardId) {
-        return new ResponseEntity<>(boardService.get(boardId), HttpStatus.OK);
+    public Response<Board> get(@PathVariable int boardId) {
+        Board board = boardService.get(boardId);
+        if(board == null) {
+            throw new BaseException(ResponseCode.DATA_IS_NULL, new String[] {"게시물"});
+        }
+        return new Response<>(boardService.get(boardId));
     }
 
     @PostMapping(value = "/save")
@@ -45,9 +53,18 @@ public class BoardController {
             @ApiImplicitParam(name="title", value = "제목", example = "제목"),
             @ApiImplicitParam(name="contents", value = "내용", example = "내용")
     })
-    public ResponseEntity<Integer> save(BoardParam board) {
+    public Response<Integer> save(BoardParam board) {
+
+        // 제목 필수체크
+        if(StringUtils.isEmpty(board.getTitle())) {
+            throw new BaseException(ResponseCode.VALIDATE_CHECK, new String[] {"title", "제목"});
+        }
+        // 내용 필수체크
+        if(StringUtils.isEmpty(board.getContents())) {
+            throw new BaseException(ResponseCode.VALIDATE_CHECK, new String[] {"content", "내용"});
+        }
          boardService.save(board);
-         return new ResponseEntity<>(board.getBoardId(), HttpStatus.OK);
+         return new Response<>(board.getBoardId());
     }
 
     @PostMapping(value = "/delete/{boardId}")
@@ -55,12 +72,12 @@ public class BoardController {
     @ApiImplicitParams({
             @ApiImplicitParam(name="boardId", value = "게시물 번호", example = "1"),
     })
-    public ResponseEntity<Boolean> delete(@PathVariable int boardId) {
+    public Response<Boolean> delete(@PathVariable int boardId) {
         Board board = boardService.get(boardId);
         if(board == null) {
-            return new ResponseEntity<>(false, HttpStatus.OK);
+            return new Response<>(false);
         }
         boardService.delete(boardId);
-        return new ResponseEntity<>(true, HttpStatus.OK);
+        return new Response<>(true);
     }
 }

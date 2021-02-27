@@ -5,9 +5,6 @@ import lombok.Data;
 /**
  * ResponseEntity 가 아닌
  * 생성한 API 공통 규격
- *
- * ResponseEntity 사용.
- *  - 현재 사용안함
  * */
 @Data
 public class Response<T> {
@@ -17,8 +14,11 @@ public class Response<T> {
 
     public Response(T data) {
         this.code = ResponseCode.SUCCESS;
-//        this.message = null;
         this.data = data;
     }
 
+    public Response(ResponseCode code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 }
