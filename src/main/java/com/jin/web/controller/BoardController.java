@@ -10,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import java.util.List;
 @Api(tags = "게시판 API")
 public class BoardController {
 
+    Logger logger = LoggerFactory.getLogger(BoardController.class);
     @Autowired
     private BoardService boardService;
 
@@ -30,6 +33,7 @@ public class BoardController {
     @ApiOperation(value = "목록 조회", notes = "게시물 전체 리스트를 확인할 수 있다.")
     public Response<List<Board>> getList() {
 //        return new ResponseEntity<>(boardService.getList(), HttpStatus.OK);
+        logger.info("getList");
         return new Response<>(boardService.getList());
     }
 
