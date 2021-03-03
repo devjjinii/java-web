@@ -5,11 +5,9 @@ import com.jin.web.dto.Board;
 import com.jin.web.http.Response;
 import com.jin.web.http.ResponseCode;
 import com.jin.web.param.BoardParam;
+import com.jin.web.param.BoardSearchParam;
 import com.jin.web.service.BoardService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +29,10 @@ public class BoardController {
 
     @GetMapping(value = "/list")
     @ApiOperation(value = "목록 조회", notes = "게시물 전체 리스트를 확인할 수 있다.")
-    public Response<List<Board>> getList() {
+    public Response<List<Board>> getList(@ApiParam BoardSearchParam param) {
 //        return new ResponseEntity<>(boardService.getList(), HttpStatus.OK);
         logger.info("getList");
-        return new Response<>(boardService.getList());
+        return new Response<>(boardService.getList(param));
     }
 
     @GetMapping(value = "/{boardId}")
@@ -54,7 +52,7 @@ public class BoardController {
     @ApiOperation(value = "등록 / 수정", notes = "신규 게시물 저장 및 해당 게시글을 수정할 수 있다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name="boardId", value = "게시물 번호", example = "1"),
-            @ApiImplicitParam(name="boardType", value= "게시물 종류", example = "NOTICE"),
+            @ApiImplicitParam(name="boardType", value= "게시물 종류"),
             @ApiImplicitParam(name="title", value = "제목", example = "제목"),
             @ApiImplicitParam(name="contents", value = "내용", example = "내용")
     })

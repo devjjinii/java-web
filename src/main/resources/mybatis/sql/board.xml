@@ -3,7 +3,7 @@
 
 <mapper namespace="com.jin.web.repository.BoardRepository">
 
-    <select id="getList" parameterType="com.jin.web.dto.Board" resultType="com.jin.web.dto.Board">
+    <select id="getList" parameterType="com.jin.web.param.BoardSearchParam" resultType="com.jin.web.dto.Board">
         SELECT
             B.BOARD_ID
             ,B.BOARD_TYPE
@@ -11,6 +11,11 @@
             ,B.CONTENTS
             ,B.REG_DATE
         FROM TB_BOARD B
+        <where>
+            <if test="searchKeyword != null and searchKeyword !=''">
+            AND B.TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+            </if>
+        </where>
         ORDER BY B.REG_DATE DESC
     </select>
 

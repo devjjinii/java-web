@@ -1,6 +1,7 @@
 package com.jin.web.repository;
 
 import com.jin.web.dto.Board;
+import com.jin.web.param.BoardSearchParam;
 import com.jin.web.param.BoardParam;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +10,7 @@ import java.util.List;
 @Repository
 public interface BoardRepository {
 
-    List<Board> getList(); // 리스트 조회
+    List<Board> getList(BoardSearchParam searchParam); // 리스트 조회
 
     Board get(int boardId); // 단건 조회
 
