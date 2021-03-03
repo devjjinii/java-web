@@ -54,6 +54,7 @@ public class BoardController {
     @ApiOperation(value = "등록 / 수정", notes = "신규 게시물 저장 및 해당 게시글을 수정할 수 있다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name="boardId", value = "게시물 번호", example = "1"),
+            @ApiImplicitParam(name="boardType", value= "게시물 종류", example = "NOTICE"),
             @ApiImplicitParam(name="title", value = "제목", example = "제목"),
             @ApiImplicitParam(name="contents", value = "내용", example = "내용")
     })

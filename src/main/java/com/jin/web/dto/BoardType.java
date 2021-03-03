@@ -1,0 +1,27 @@
+package com.jin.web.dto;
+
+public enum BoardType implements BaseCodeEnum{
+
+    NOTICE("공지사항"),
+    FAQ("자주묻는질문"),
+    INQUIRY("1:1문의"),
+    ;
+
+    private String code;
+    private String label;
+
+    BoardType(String label) {
+        this.code = name(); //enum 제공 (NOTICE,FAQ....)
+        this.label = label;
+    }
+
+    @Override
+    public String code() {
+        return code;
+    }
+
+    @Override
+    public String label() {
+        return label;
+    }
+}

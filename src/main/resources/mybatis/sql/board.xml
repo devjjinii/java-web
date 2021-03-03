@@ -6,6 +6,7 @@
     <select id="getList" parameterType="com.jin.web.dto.Board" resultType="com.jin.web.dto.Board">
         SELECT
             B.BOARD_ID
+            ,B.BOARD_TYPE
             ,B.TITLE
             ,B.CONTENTS
             ,B.REG_DATE
@@ -16,6 +17,7 @@
     <select id="get" parameterType="int" resultType="com.jin.web.dto.Board">
         SELECT
             B.BOARD_ID
+            ,B.BOARD_TYPE
             ,B.TITLE
             ,B.CONTENTS
             ,B.REG_DATE
@@ -27,13 +29,15 @@
     <insert id="save" parameterType="com.jin.web.param.BoardParam" useGeneratedKeys="true" keyProperty="boardId">
        INSERT INTO TB_BOARD
        (
-        TITLE
+        BOARD_TYPE
+        ,TITLE
         ,CONTENTS
         ,REG_DATE
        )
        VALUES
        (
-        #{title}
+        #{boardType}
+        ,#{title}
         ,#{contents}
         ,NOW()
        )
@@ -42,7 +46,8 @@
     <update id="update" parameterType="com.jin.web.dto.Board">
         UPDATE TB_BOARD
         SET
-            TITLE = #{title}
+            BOARD_TYPE = #{boardType}
+            ,TITLE = #{title}
             ,CONTENTS = #{contents}
         WHERE BOARD_ID = #{boardId}
     </update>

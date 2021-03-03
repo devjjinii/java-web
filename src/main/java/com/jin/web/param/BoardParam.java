@@ -1,5 +1,6 @@
 package com.jin.web.param;
 
+import com.jin.web.dto.BoardType;
 import lombok.Data;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Data;
 public class BoardParam {
 
     private int boardId;
+    private BoardType boardType; // 타입 추가
     private String title;
     private String contents;
 }
