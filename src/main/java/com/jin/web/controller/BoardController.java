@@ -1,5 +1,6 @@
 package com.jin.web.controller;
 
+import com.jin.web.config.RequestConfig;
 import com.jin.web.config.exception.BaseException;
 import com.jin.web.dto.Board;
 import com.jin.web.http.Response;
@@ -49,6 +50,7 @@ public class BoardController {
     }
 
     @PostMapping(value = "/save")
+    @RequestConfig // 만든 config
     @ApiOperation(value = "등록 / 수정", notes = "신규 게시물 저장 및 해당 게시글을 수정할 수 있다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name="boardId", value = "게시물 번호", example = "1"),
@@ -71,6 +73,7 @@ public class BoardController {
     }
 
     @PostMapping(value = "/delete/{boardId}")
+    @RequestConfig
     @ApiOperation(value = "삭제", notes = "해당 게시글을 삭제할 수 있다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name="boardId", value = "게시물 번호", example = "1"),

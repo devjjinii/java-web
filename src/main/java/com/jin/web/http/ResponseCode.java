@@ -10,6 +10,7 @@ public enum ResponseCode {
     FAIL,
     DATA_IS_NULL, // NULL 체크
     VALIDATE_CHECK,  // 필수값 확인
+    LOGIN_REQUIRED, // 로그인 체크
     ;
 
 
