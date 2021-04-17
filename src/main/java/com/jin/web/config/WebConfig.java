@@ -45,6 +45,11 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
+    public GlobalConfig config() {
+        return new GlobalConfig();
+    }
+
+    @Bean
     public BaseInterceptor baseInterceptor() {
         return new BaseInterceptor();
     }

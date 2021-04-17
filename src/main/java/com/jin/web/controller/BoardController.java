@@ -25,6 +25,7 @@ import java.util.List;
 public class BoardController {
 
     Logger logger = LoggerFactory.getLogger(BoardController.class);
+
     @Autowired
     private BoardService boardService;
 
