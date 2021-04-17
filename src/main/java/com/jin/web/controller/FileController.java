@@ -26,7 +26,7 @@ public class FileController {
     @Autowired
     private GlobalConfig config;
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/upload")
     @ApiOperation(value = "업로드", notes = "파일 업로드")
     public Response<Boolean> save(@RequestParam("uploadFile") MultipartFile multipartFile) {
         logger.debug("multipartFile: {}", multipartFile);
