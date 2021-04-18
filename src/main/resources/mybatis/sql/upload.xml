@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jin.web.repository.UploadRepository">
+    <insert id="upload" parameterType="com.jin.web.param.UploadFileParam">
+        INSERT INTO TB_UPLOAD_FILE
+        (
+            PATH_NAME
+            ,FILE_NAME
+            ,ORG_FILENAME
+            ,SIZE
+            ,CONTENT_TYPE
+            ,RESOURCE_PATHNAME
+            ,REG_DATE
+        )
+        VALUES
+        (
+            #{pathName}
+            ,#{fileName}
+            ,#{orgFilename}
+            ,#{size}
+            ,#{contentType}
+            ,#{resourcePathname}
+            ,NOW()
+        )
+    </insert>
+
+</mapper>

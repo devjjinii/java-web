@@ -20,6 +20,7 @@ public class GlobalConfig {
     private ResourceLoader resourceLoader;
 
     private String uploadFilePath;
+    private String uploadResourcePath;
 
     @PostConstruct
     public void init() {
@@ -33,6 +34,7 @@ public class GlobalConfig {
             Resource resource = resourceLoader.getResource(resourcePath);
             Properties properties = PropertiesLoaderUtils.loadProperties(resource);
             uploadFilePath = properties.getProperty("uploadFile.path");
+            uploadResourcePath = properties.getProperty("uploadFile.resourcePath");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,5 +43,9 @@ public class GlobalConfig {
 
     public String getUploadFilePath() {
         return uploadFilePath;
+    }
+
+    public String getUploadResourcePath() {
+        return uploadResourcePath;
     }
 }
